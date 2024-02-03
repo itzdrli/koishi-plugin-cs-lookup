@@ -36,7 +36,8 @@ export function apply(ctx: Context, config: Config) {
           totalItemCount ++
           const itemName = item.marketname
           const itemCount = item.count
-          itemMap.set(itemName, (itemMap.get(itemName) || 0) + itemCount)
+          const itemImage = item.image
+          itemMap.set(itemImage + itemName, (itemMap.get(itemName) || 0) + itemCount)
         }
 
         for (const [itemName, itemCount] of itemMap.entries()) {
