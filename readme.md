@@ -9,5 +9,6 @@
 点击右上角的使用 Steam 登录，登陆完成后将获得一个 API Key, 将其复制并填入插件配置页的 `SteamWebAPIKey` 选项，保存并启用插件即可.
 
 ### 使用
-指令: 
-`cs-inv <steamID>`
+指令:
+- `cs-inv <steamID>`
+- `getid <Steam个人资料链接>`
