@@ -22,8 +22,14 @@ export const usage = `
 `
 
 export function apply(ctx: Context, config: Config) {
+  function isOnlyDigits(str) {
+    return /^\d+$/.test(str);
+  }
   ctx.command('cs-inv <steamId>', '查看CS背包', { authority: 0 })
     .action(async ({ session }, steamId) => {
+      if (!isOnlyDigits(steamId)) {
+        return "无效steamID, 若不知道steamID请使用指令 `getid Steam个人资料页链接` 获取"
+      }
       const invUrl = 'https://www.steamwebapi.com/steam/api/inventory?key=' + config.SteamWebAPIKey + '&steam_id=' + steamId + '&game=csgo'
       const profUrl = 'https://www.steamwebapi.com/steam/api/profile?key=' + config.SteamWebAPIKey + '&steam_id=' + steamId
       try {
@@ -76,4 +82,14 @@ export function apply(ctx: Context, config: Config) {
         return error
       }
     })
+
+    ctx.command('getid <profLink>', '获取Steam ID', { authority: 0 })
+      .action(async ({session}, profLink) => {
+        if (!profLink.startsWith("https://steamcommunity.com/profiles/")) 
+          return '请输入正确的Steam个人资料链接'
+        const profUrl = 'https://www.steamwebapi.com/steam/api/profile?key=' + config.SteamWebAPIKey + '&id=' + profLink
+        const data = await ctx.http.get(profUrl)
+        let result = '用户名: ' + data.personaname + '\n玩家名: ' + data.realname + '\nSteam ID: ' + data.steamids.steamid64
+        return result
+      })
 }
