@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itzdrli/koishi-plugin-cs-lookup.git"
+    "url": "git+https://github.com/itzdtech/koishi-plugin-cs-lookup.git"
   },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
