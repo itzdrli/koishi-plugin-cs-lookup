@@ -7,25 +7,32 @@ function isOnlyDigits(str: string): boolean {
 }
 
 let result = ''
-const html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-900 bg-opacity-80" style="width: 650px">
-    <div class="container mx-auto px-4 max-w-650 w-auto">
-        <div class="bg-gray-800 rounded-lg shadow-lg p-8">
-            <div class="text-center mt-4">
-                <div class="text-lg font-bold text-white">${result}</div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-`;
+export function generateHtml(result: string): string {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=auto, initial-scale=1.0">
+      <script src="https://cdn.tailwindcss.com"></script>
+      <style>
+        body {
+          background-color: #1a202c;
+          color: #fff;
+        }
+      </style>
+    </head>
+    <body style="width: 650px">
+      <div class="container mx-auto py-8">
+        <div class="bg-gray-800 p-4 rounded-lg text-center"><pre><code class="text-white">${result}</code></pre></div>
+      </div>
+      <footer class="bg-gray-800 text-center py-2">
+        <p class="text-white" style="font-size: 10px">Powered by ItzTech</p>
+      </footer>
+    </body>
+    </html>
+  `;
+}
 
 export function inv(ctx: Context, config: Config) {
   ctx.command('cs-inv <steamId>', '查看CS背包', { authority: 0 })
@@ -38,7 +45,7 @@ export function inv(ctx: Context, config: Config) {
       try {
         const invData = await ctx.http.get(invUrl);
         const profData = await ctx.http.get(profUrl);
-        let result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
+        result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
         const itemMap = new Map<string, number>();
         let totalItemCount = 0;
         for (const item of invData) {
@@ -56,6 +63,7 @@ export function inv(ctx: Context, config: Config) {
         if (!config.useImg) return result;
         else {
           result = result.replace(/\n/g, '<br>');
+          const html = generateHtml(result);
           const image = await ctx.puppeteer.render(html);
           return image;
         }
