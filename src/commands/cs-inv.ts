@@ -2,7 +2,7 @@ import { Context } from 'koishi';
 import { Config } from '../index';
 import { } from 'koishi-plugin-puppeteer'
 
-function isOnlyDigits(str: string): boolean {
+export function isOnlyDigits(str: string): boolean {
   return /^\d+$/.test(str);
 }
 
