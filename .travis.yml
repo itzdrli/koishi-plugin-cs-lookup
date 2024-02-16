@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - "18"
+  - "20"
+
+cache:
+  directories:
+    - ~/.npm
+    - ~/.cache
+
+jobs:
+  include:
+    - stage: lint
+      name: Lint JavaScript
+      script:
+        - yarn lint
+
+    - stage: build
+      name: Build
+      script:
+        - yarn build
+
+    - stage: test
+      name: Test
+      script:
+        - yarn test
