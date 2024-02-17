@@ -12,6 +12,9 @@
     "lib",
     "dist"
   ],
+  "scripts": {
+    "build": "yakumo build"
+  },
   "license": "MIT",
   "keywords": [
     "chatbot",
@@ -20,5 +23,10 @@
   ],
   "peerDependencies": {
     "koishi": "^4.16.7"
+  },
+  "devDependencies": {
+    "yakumo": "^0.3.13",
+    "yakumo-tsc": "^0.3.12",
+    "yml-register": "^1.1.0"
   }
 }

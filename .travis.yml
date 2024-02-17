@@ -12,27 +12,12 @@ cache:
 jobs:
   include:
 
-    - stage: clone-koishi
-      name: Clone Koishi
-      script:
-        - git clone https://github.com/koishijs/boilerplate.git ./koishi
-
-    - stage: clone-plugin
-      name: Clone Plugin
-      script:
-        - git clone https://github.com/itzdrli/koishi-plugin-cs-lookup.git ./koishi/external
-
     - stage: install
       name: Install
       script:
-        - yarn install
+        - npm run install
 
     - stage: build
       name: Build
       script:
-        - yarn build
-
-depoly:
-  provider: npm
-  email: "liletian1231@gmail.com"
-  api_key: "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"
+        - npm run build
