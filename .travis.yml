@@ -12,11 +12,6 @@ cache:
 jobs:
   include:
 
-    - stage: install
-      name: Install
-      script:
-        - npm run install
-
     - stage: build
       name: Build
       script:
