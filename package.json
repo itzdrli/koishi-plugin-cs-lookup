@@ -26,11 +26,12 @@
     "koishi-plugin-puppeteer": "^3.7.3"
   },
   "devDependencies": {
-    "koishi": "^4.16.8",
+    "koishi": "^4.16.7",
+    "koishi-plugin-puppeteer": "^3.7.3",
     "typescript": "^5.3.3",
     "yakumo": "^0.3.13",
     "yakumo-tsc": "^0.3.12",
-    "yml-register": "^1.1.0",
-    "koishi-plugin-puppeteer": "^3.7.3"
-  }
+    "yml-register": "^1.1.0"
+  },
+  "packageManager": "yarn@2.4.3"
 }
