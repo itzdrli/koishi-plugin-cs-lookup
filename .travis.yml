@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "20"
 
-dist: generic
+dist: bionic
 
 cache:
   directories:
@@ -15,7 +15,14 @@ jobs:
       name: Install And Build
       script:
         - npm install -g yarn
-        - yarn init -2
+        - yarn set version 2
         - yarn install
         - yarn tsc -b
-        - yarn npm publish
+
+    - stage: deploy
+      name: publish to npmjs.com
+      deploy:
+        provider: npm
+        email: "liletian1231@gmail.com" 
+        api_token: $npmToken
+        skip_cleanup: true
