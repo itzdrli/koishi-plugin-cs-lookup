@@ -15,12 +15,12 @@ jobs:
     - stage: clone-koishi
       name: Clone Koishi
       script:
-        - git clone https://github.com/koishijs/boilerplate.git ./
+        - git clone https://github.com/koishijs/boilerplate.git ./koishi
 
     - stage: clone-plugin
       name: Clone Plugin
       script:
-        - git clone https://github.com/itzdrli/koishi-plugin-cs-lookup.git ./external
+        - git clone https://github.com/itzdrli/koishi-plugin-cs-lookup.git ./koishi/external
 
     - stage: install
       name: Install
