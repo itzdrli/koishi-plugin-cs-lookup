@@ -5,13 +5,16 @@ node_js:
 dist: generic
 
 cache:
-  yarn: true
   directories:
     - ~/.npm
     - ~/.cache
 
 jobs:
   include:
+    - stage: install-yarn
+      name: Install Yarn
+      script:
+        - npm install -g yarn
 
     - stage: build
       name: Build
