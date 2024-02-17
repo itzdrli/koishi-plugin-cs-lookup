@@ -25,4 +25,4 @@ jobs:
         provider: npm
         email: "liletian1231@gmail.com"
         api_token: $npmToken
-        skip_cleanup: true
+        cleanup: false
