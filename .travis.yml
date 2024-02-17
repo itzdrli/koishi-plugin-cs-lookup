@@ -15,6 +15,7 @@ jobs:
       name: Install Yarn
       script:
         - npm install -g yarn
+        - yarn init -2
 
     - stage: build
       name: Build
