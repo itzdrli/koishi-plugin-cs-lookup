@@ -11,13 +11,10 @@ cache:
 
 jobs:
   include:
-    - stage: install-yarn
-      name: Install Yarn
+    - stage: install-build
+      name: Install And Build
       script:
         - npm install -g yarn
         - yarn init -2
-
-    - stage: build
-      name: Build
-      script:
-        - yarn tsc -b && yarn npm publish
+        - yarn tsc -b
+        - yarn npm publish
