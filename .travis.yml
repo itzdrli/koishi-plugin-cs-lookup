@@ -19,4 +19,4 @@ jobs:
     - stage: build
       name: Build
       script:
-        - yarn tsc -b && yarn npm publish
+        - yarn tsc -b && yarn publish
