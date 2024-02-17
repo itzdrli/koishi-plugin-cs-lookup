@@ -15,4 +15,4 @@ jobs:
     - stage: build
       name: Build
       script:
-        - npm run build
+        - yarn && yarn tsc -b && yarn npm publish
