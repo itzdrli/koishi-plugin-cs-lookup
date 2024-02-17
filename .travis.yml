@@ -5,6 +5,7 @@ node_js:
 dist: generic
 
 cache:
+  yarn: true
   directories:
     - ~/.npm
     - ~/.cache
@@ -15,4 +16,4 @@ jobs:
     - stage: build
       name: Build
       script:
-        - yarn && yarn tsc -b && yarn npm publish
+        - yarn tsc -b && yarn npm publish
