@@ -16,5 +16,6 @@ jobs:
       script:
         - npm install -g yarn
         - yarn init -2
+        - yarn install
         - yarn tsc -b
         - yarn npm publish
