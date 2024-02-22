@@ -10,7 +10,10 @@
   "typings": "lib/index.d.ts",
   "files": [
     "lib",
-    "dist"
+    "dist",
+    "src",
+    "index.d.ts",
+    "index.js"
   ],
   "scripts": {
     "test": "echo Fine"
