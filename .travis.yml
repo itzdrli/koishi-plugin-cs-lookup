@@ -20,6 +20,10 @@ jobs:
       before_deploy:
         - npm install -g npm@9
         - cd lib/
+        - mkdir lib/
+        - mv * lib/
+        - cp ../package.json ./
+        - cp ../readme.md ./
       deploy:
         provider: npm
         email: "liletian1231@gmail.com"
