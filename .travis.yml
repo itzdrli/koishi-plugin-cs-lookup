@@ -19,8 +19,9 @@ jobs:
         - yarn tsc -b
       before_deploy:
         - npm install -g npm@9
-      deploy:
-        provider: npm
-        email: "liletian1231@gmail.com"
-        api_token: $npmToken
-        cleanup: false
+        - ls -a
+      # deploy:
+      #   provider: npm
+      #   email: "liletian1231@gmail.com"
+      #   api_token: $npmToken
+      #   cleanup: false
