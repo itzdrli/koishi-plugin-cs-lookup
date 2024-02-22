@@ -1,5 +1,3 @@
-# THIS IS AN ALPHA VERSION, DO NOT USE IN PRODUCTION
-
 # cs-lookup
 
 [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/itzdrli/koishi-plugin-cs-lookup) [![npm](https://img.shields.io/npm/v/koishi-plugin-cs-lookup?style=flat-square)](https://www.npmjs.com/package/koishi-plugin-cs-lookup) [![Build Status](https://app.travis-ci.com/itzdrli/koishi-plugin-cs-lookup.svg?branch=master)](https://app.travis-ci.com/itzdrli/koishi-plugin-cs-lookup)
