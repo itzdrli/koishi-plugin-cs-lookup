@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-cs-lookup",
   "description": "A plugin helps lookup player status of CS2",
-  "version": "0.1.2-alhpa0",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itzdtech/koishi-plugin-cs-lookup.git"
@@ -13,7 +13,6 @@
     "dist"
   ],
   "scripts": {
-    "build": "yakumo build",
     "test": "echo Fine"
   },
   "license": "MIT",
@@ -30,8 +29,6 @@
     "koishi": "^4.16.7",
     "koishi-plugin-puppeteer": "^3.7.3",
     "typescript": "^5.3.3",
-    "yakumo": "^0.3.13",
-    "yakumo-tsc": "^0.3.12",
     "yml-register": "^1.1.0"
   }
 }
