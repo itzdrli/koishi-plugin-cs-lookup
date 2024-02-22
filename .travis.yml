@@ -21,6 +21,8 @@ jobs:
 
     - stage: deploy
       name: publish to npmjs.com
+      before_deploy:
+        - npm install -g npm@9
       deploy:
         provider: npm
         email: "liletian1231@gmail.com"
