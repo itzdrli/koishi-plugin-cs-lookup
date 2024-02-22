@@ -19,6 +19,7 @@ jobs:
         - yarn tsc -b
       before_deploy:
         - npm install -g npm@9
+        - cd lib/
       deploy:
         provider: npm
         email: "liletian1231@gmail.com"
