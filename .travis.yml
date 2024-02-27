@@ -20,9 +20,8 @@ jobs:
         - ls lib/
       before_deploy:
         - npm install -g npm@9
-        - ls -a
-      # deploy:
-      #   provider: npm
-      #   email: "liletian1231@gmail.com"
-      #   api_token: $npmToken
-      #   cleanup: false
+      deploy:
+        provider: npm
+        email: "liletian1231@gmail.com"
+        api_token: $npmToken
+        skip_cleanup: true
