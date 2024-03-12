@@ -6,7 +6,6 @@ export function isOnlyDigits(str: string): boolean {
   return /^\d+$/.test(str);
 }
 
-let result = ''
 export function generateHtml(result: string): string {
   return `
     <!DOCTYPE html>
@@ -45,7 +44,7 @@ export function inv(ctx: Context, config: Config) {
       try {
         const invData = await ctx.http.get(invUrl);
         const profData = await ctx.http.get(profUrl);
-        result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
+        let result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
         const itemMap = new Map<string, number>();
         let totalItemCount = 0;
         for (const item of invData) {

@@ -14,7 +14,7 @@ export interface Config {
 
 export const Config: Schema<Config> = Schema.object({
   SteamWebAPIKey: Schema.string().description("Steam Web API Key from www.steamwebapi.com"),
-  useImg: Schema.boolean().default(false).description("是否为背包查询使用图片回复(需要puppeteer)")
+  useImg: Schema.boolean().default(false).description("是否为背包查询(cs-inv)使用图片回复(需要puppeteer)")
 })
 
 export const usage = `
