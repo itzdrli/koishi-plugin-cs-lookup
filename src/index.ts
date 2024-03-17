@@ -20,6 +20,7 @@ export const Config: Schema<Config> = Schema.object({
 export const usage = `
 <h2> This plugin requires a SteamWebAPI Key from <a href="https://www.steamwebapi.com">steamwebapi.com</a></h2>
 <h2> 本插件需要来自 <a href="www.steamwebapi.com">steamwebapi.com</a> 的SteamWebAPI Key</h2>
+<p>请我喝杯咖啡 👉<a href="https://ko-fi.com/itzdrli"><img src="https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white" alt="ko-fi"></a></p>
 `;
 
 export function apply(ctx: Context, config: Config) {
