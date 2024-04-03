@@ -42,47 +42,55 @@ export function inv(ctx: Context, config: Config) {
       if (!config.useSteamAPI) {
         const invUrl = `https://www.steamwebapi.com/steam/api/inventory?key=${config.SteamWebAPIKey}&steam_id=${steamId}&game=csgo`;
         const profUrl = `https://www.steamwebapi.com/steam/api/profile?key=${config.SteamWebAPIKey}&steam_id=${steamId}`;
-        const invData = await ctx.http.get(invUrl);
-        const profData = await ctx.http.get(profUrl);
-        let result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
-        const itemMap = new Map<string, number>();
-        let totalItemCount = 0;
-        for (const item of invData) {
-          totalItemCount++;
-          const itemName = item.marketname;
-          const itemCount = item.count;
-          itemMap.set(itemName, (itemMap.get(itemName) || 0) + itemCount);
-        }
-  
-        for (const [itemName, itemCount] of itemMap.entries()) {
-          result += `${itemName} 数量: ${itemCount}\n`;
-        }
-  
-        result += `总物品数: ${totalItemCount}`;
-        if (!config.useImg) return result;
-        else {
-          result = result.replace(/\n/g, '<br>');
-          const html = generateHtml(result);
-          const image = await ctx.puppeteer.render(html);
-          return image;
+        try {
+          const invData = await ctx.http.get(invUrl);
+          const profData = await ctx.http.get(profUrl);
+          let result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
+          const itemMap = new Map<string, number>();
+          let totalItemCount = 0;
+          for (const item of invData) {
+            totalItemCount++;
+            const itemName = item.marketname;
+            const itemCount = item.count;
+            itemMap.set(itemName, (itemMap.get(itemName) || 0) + itemCount);
+          }
+
+          for (const [itemName, itemCount] of itemMap.entries()) {
+            result += `${itemName} 数量: ${itemCount}\n`;
+          }
+
+          result += `总物品数: ${totalItemCount}`;
+          if (!config.useImg) return result;
+          else {
+            result = result.replace(/\n/g, '<br>');
+            const html = generateHtml(result);
+            const image = await ctx.puppeteer.render(html);
+            return image;
+          }
+        } catch (e) {
+          return "出现错误, 请检查该用户库存是否公开或者网络连接是否正常"
         }
       } else {
         const invUrl = `https://steamcommunity.com/inventory/${steamId}/730/2?l=schinese`
-        const invData = await ctx.http.get(invUrl);
-        let result = `玩家(${steamId})的库存: \n`
-        const itemMap = new Map<string, number>();
-        for (const item of invData.descriptions) {
-          const itemName = item.market_name;
-          itemMap.set(itemName, (itemMap.get(itemName) || 0));
-        }
-        result += Array.from(itemMap.keys()).join('\n');
-        result += `\n总物品数: ${invData.total_inventory_count}`;
-        if (!config.useImg) return result;
-        else {
-          result = result.replace(/\n/g, '<br>');
-          const html = generateHtml(result);
-          const image = await ctx.puppeteer.render(html);
-          return image;
+        try {
+          const invData = await ctx.http.get(invUrl);
+          let result = `玩家(${steamId})的库存: \n`
+          const itemMap = new Map<string, number>();
+          for (const item of invData.descriptions) {
+            const itemName = item.market_name;
+            itemMap.set(itemName, (itemMap.get(itemName) || 0));
+          }
+          result += Array.from(itemMap.keys()).join('\n');
+          result += `\n总物品数: ${invData.total_inventory_count}`;
+          if (!config.useImg) return result;
+          else {
+            result = result.replace(/\n/g, '<br>');
+            const html = generateHtml(result);
+            const image = await ctx.puppeteer.render(html);
+            return image;
+          }
+        } catch (e) {
+          return "出现错误, 请检查该用户库存是否公开或者与SteamAPI的连接是否正常"
         }
       }
   })
