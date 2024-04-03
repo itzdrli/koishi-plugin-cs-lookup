@@ -26,7 +26,7 @@ export function generateHtml(result: string): string {
         <div class="bg-gray-800 p-4 rounded-lg text-center"><pre><code class="text-white">${result}</code></pre></div>
       </div>
       <footer class="bg-gray-800 text-center py-2">
-        <p class="text-white" style="font-size: 10px">Powered by ItzTech</p>
+        <p class="text-white" style="font-size: 10px">Powered by koishi-plugin-cs-lookup</br>广告位招租</p>
       </footer>
     </body>
     </html>
@@ -39,9 +39,9 @@ export function inv(ctx: Context, config: Config) {
       if (!isOnlyDigits(steamId)) {
         return "无效steamID, 若不知道steamID请使用指令 `getid Steam个人资料页链接` 获取";
       }
-      const invUrl = `https://www.steamwebapi.com/steam/api/inventory?key=${config.SteamWebAPIKey}&steam_id=${steamId}&game=csgo`;
-      const profUrl = `https://www.steamwebapi.com/steam/api/profile?key=${config.SteamWebAPIKey}&steam_id=${steamId}`;
-      try {
+      if (!config.useSteamAPI) {
+        const invUrl = `https://www.steamwebapi.com/steam/api/inventory?key=${config.SteamWebAPIKey}&steam_id=${steamId}&game=csgo`;
+        const profUrl = `https://www.steamwebapi.com/steam/api/profile?key=${config.SteamWebAPIKey}&steam_id=${steamId}`;
         const invData = await ctx.http.get(invUrl);
         const profData = await ctx.http.get(profUrl);
         let result = `玩家 ${profData.realname}(${steamId}) 的库存: \n`;
@@ -53,11 +53,11 @@ export function inv(ctx: Context, config: Config) {
           const itemCount = item.count;
           itemMap.set(itemName, (itemMap.get(itemName) || 0) + itemCount);
         }
-
+  
         for (const [itemName, itemCount] of itemMap.entries()) {
           result += `${itemName} 数量: ${itemCount}\n`;
         }
-
+  
         result += `总物品数: ${totalItemCount}`;
         if (!config.useImg) return result;
         else {
@@ -66,8 +66,24 @@ export function inv(ctx: Context, config: Config) {
           const image = await ctx.puppeteer.render(html);
           return image;
         }
-      } catch (error) {
-        return error;
+      } else {
+        const invUrl = `https://steamcommunity.com/inventory/${steamId}/730/2?l=schinese`
+        const invData = await ctx.http.get(invUrl);
+        let result = `玩家(${steamId})的库存: \n`
+        const itemMap = new Map<string, number>();
+        for (const item of invData.descriptions) {
+          const itemName = item.market_name;
+          itemMap.set(itemName, (itemMap.get(itemName) || 0));
+        }
+        result += Array.from(itemMap.keys()).join('\n');
+        result += `\n总物品数: ${invData.total_inventory_count}`;
+        if (!config.useImg) return result;
+        else {
+          result = result.replace(/\n/g, '<br>');
+          const html = generateHtml(result);
+          const image = await ctx.puppeteer.render(html);
+          return image;
+        }
       }
-    });
+  })
 }
