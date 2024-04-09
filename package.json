@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-cs-lookup",
   "description": "A plugin helps lookup player status of CS2",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itzdrli/koishi-plugin-cs-lookup.git"
@@ -23,7 +23,9 @@
   ],
   "peerDependencies": {
     "koishi": "^4.16.7",
-    "koishi-plugin-puppeteer": "^3.8.3"
+    "koishi-plugin-puppeteer": "^3.8.3",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "koishi": "^4.16.7",
