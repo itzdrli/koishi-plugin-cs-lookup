@@ -18,7 +18,7 @@ jobs:
         - npm install -g yarn
         - yarn install
         - yarn tsc -b
-        - cp chota.min.css lib/
+        - cp src/chota.min.css lib/
       before_deploy:
         - npm install -g npm@9
       deploy:
