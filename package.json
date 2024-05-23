@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-cs-lookup",
   "description": "CS:GO/CS2 库存查询",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itzdrli/koishi-plugin-cs-lookup.git"
@@ -30,7 +30,7 @@
   "devDependencies": {
     "koishi": "^4.16.7",
     "koishi-plugin-puppeteer": "^3.8.4",
-    "typescript": "^5.5.0-dev.20240416",
+    "typescript": "^5.5.0-dev.20240523",
     "yml-register": "^1.2.5"
   }
 }

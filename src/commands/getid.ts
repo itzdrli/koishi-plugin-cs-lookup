@@ -12,7 +12,7 @@ export function apply(ctx: Context, config: Config) {
       let result = '用户名: ' + 
         data.personaname + 
         '\nSteam ID: ' + 
-        data.steamids.steamid64;
+        data.steamid;
       return result;
     });
 }
