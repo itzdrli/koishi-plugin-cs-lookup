@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-cs-lookup",
   "description": "CS:GO/CS2 库存查询",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itzdrli/koishi-plugin-cs-lookup.git"
@@ -13,7 +13,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "echo Fine"
+    "build": "yakumo build"
   },
   "license": "MIT",
   "keywords": [
@@ -28,9 +28,14 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "koishi": "^4.16.7",
+    "koishi": "^4.17.8",
     "koishi-plugin-puppeteer": "^3.8.4",
-    "typescript": "^5.5.0-dev.20240526",
-    "yml-register": "^1.2.5"
-  }
+    "yakumo": "^1.0.0-beta.16",
+    "yakumo-esbuild": "^1.0.0-beta.6",
+    "yakumo-tsc": "1.0.0-beta.4",
+    "tsc": "^2.0.4",
+    "typescript": "^5.4.5",
+    "esbuild": "^0.21.5"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

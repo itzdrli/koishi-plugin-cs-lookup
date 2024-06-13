@@ -1,7 +1,7 @@
 import { Context } from 'koishi'
 import { Config } from '../index'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { } from 'koishi-plugin-puppeteer'
 import Umami from '../umami'
 
