@@ -1,6 +1,6 @@
 import os from "node:os";
-import {Context, version} from "koishi";
-import packageJson from "../package.json"
+import { Context, version } from "koishi";
+import packageJson from "../package.json";
 
 const dataHostUrl: string = 'https://data.itzdrli.com';
 const website: string = "29272bd1-0f4c-4db8-ad22-bec20ee15810";
@@ -18,16 +18,64 @@ interface Payload {
 }
 
 const Umami = {
-  send({ctx, url = '/', urlSearchParams, title, eventName, data}: {
+  userAgentOs: undefined as string | undefined,
+
+  getUserAgentOs() {
+    if (!Umami.userAgentOs) {
+      Umami.userAgentOs = Umami._getUserAgentOs();
+    }
+    return Umami.userAgentOs;
+  },
+
+  _getUserAgentOs() {
+    switch (os.platform()) {
+      case "aix":
+        return 'X11; U; AIX 005A471A4C00; en-US; rv:1.0rc2';
+      case 'android':
+        return 'Android 13; Mobile; rv:126.0';
+      case 'darwin':
+        return 'Macintosh; Intel Mac OS X 13_6_0';
+      case 'freebsd':
+        return 'X11; FreeBSD amd64; rv:122.0';
+      case 'haiku':
+        return 'X11; Haiku x86_64';
+      case 'linux':
+        return 'X11; Linux x86_64';
+      case 'openbsd':
+        return 'X11; OpenBSD amd64;';
+      case 'sunos':
+        return 'X11; U; SunOS sun4u;';
+      case 'cygwin':
+        return 'Win16;';
+      case 'netbsd':
+        return 'X11; NetBSD amd64;';
+      case 'win32':
+        let version = os.release().replace(/^([^.]+\.[^.]+)[\s\S]*/, '$1');
+        switch (os.arch()) {
+          case 'x64':
+            return 'Windows NT ' + version + '; Win64; x64';
+          case 'x86':
+            return 'Windows NT ' + version + '; Win32; x86';
+          case 'arm':
+            return 'Windows NT ' + version + '; ARM';
+          default:
+            return 'Windows NT ' + version;
+        }
+      default:
+        return os.platform() + ' ' + os.arch() + ';';
+    }
+  },
+
+  send({ ctx, url = '/', urlSearchParams, title, eventName, data }: {
     ctx: Context,
     url?: string,
-    urlSearchParams?: Record<string, any>
+    urlSearchParams?: Record<string, any>,
     title?: string,
-    eventName?: string
+    eventName?: string,
     data?: Record<string, any>,
   }) {
     const searchParams = new URLSearchParams();
-    if (searchParams) {
+    if (urlSearchParams) {
       for (let key in urlSearchParams) {
         searchParams.set(key, urlSearchParams[key]);
       }
@@ -53,12 +101,11 @@ const Umami = {
       {
         headers: {
           'content-type': 'application/json',
-          'User-Agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/11.4.5.14`,
+          'User-Agent': `Mozilla/5.0 (${Umami.getUserAgentOs()}) Chrome/11.4.5.14`,
         },
       }
     );
   },
-}
-
+};
 
 export default Umami;
