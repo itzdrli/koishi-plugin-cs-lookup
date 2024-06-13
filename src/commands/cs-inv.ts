@@ -3,6 +3,7 @@ import { Config } from '../index'
 import fs from 'fs'
 import path from 'path'
 import { } from 'koishi-plugin-puppeteer'
+import Umami from '../umami'
 
 export function isOnlyDigits(str: string): boolean {
   return /^\d+$/.test(str);
@@ -74,6 +75,16 @@ export function inv(ctx: Context, config: Config) {
   const chotaStyles = fs.readFileSync(path.join(__dirname, '../chota.min.css'), 'utf-8');
   ctx.command('cs-inv <steamId>', '查看CS背包', { authority: 0 })
     .action(async ({ session }, steamId) => {
+      if (config.data_collet) {
+        Umami.send({
+          ctx,
+          url: '/cs-inv',
+          urlSearchParams: {
+            args: session.argv.args?.join(', '),
+            ...(session.argv.options || {}),
+          }
+        });
+      }
       if (!isOnlyDigits(steamId)) {
         return "无效steamID, 若不知道steamID请使用指令 `getid Steam个人资料页链接` 获取";
       }

@@ -8,12 +8,14 @@ export const inject = {
   optional: ['puppeteer']
 }
 export interface Config {
+  data_collet: boolean,
   theme: boolean,
   useSteamAPI: boolean,
   SteamWebAPIKey: string
 }
 
 export const Config: Schema<Config> = Schema.object({
+  data_collet: Schema.boolean().default(true).description('是否允许匿名数据收集'),
   theme: Schema.boolean().default(false).description('使用浅色主题'),
   useSteamAPI: Schema.boolean().default(true).description("是否使用Steam官方API查询 (大陆地区实例容易被墙)"),
   SteamWebAPIKey: Schema.string().description("Steam Web API Key from www.steamwebapi.com"),

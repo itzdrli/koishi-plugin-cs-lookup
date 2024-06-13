@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "jsx": "react-jsx",
+    "resolveJsonModule": true,
     "jsxImportSource": "@satorijs/element",
     "types": [
       "node",
