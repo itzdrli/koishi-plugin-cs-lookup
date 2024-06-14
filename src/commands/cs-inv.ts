@@ -72,10 +72,10 @@ export function generateHtml(chotaStyles, cardHTML, totalStr, steamId, steamName
 }
 
 export function inv(ctx: Context, config: Config) {
-  const chotaStyles = fs.readFileSync(path.join(__dirname, '../chota.min.css'), 'utf-8');
+  const chotaStyles = fs.readFileSync((path.parse(__filename).dir,'../chota.min.css'), 'utf-8');
   ctx.command('cs-inv <steamId>', '查看CS背包', { authority: 0 })
     .action(async ({ session }, steamId) => {
-      if (config.data_collet) {
+      if (config.data_collect) {
         Umami.send({
           ctx,
           url: '/cs-inv',

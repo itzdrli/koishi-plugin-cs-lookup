@@ -5,7 +5,7 @@ import Umami from '../umami';
 export function apply(ctx: Context, config: Config) {
   ctx.command('getid <profLink:string>', '获取Steam ID', { authority: 0 })
     .action(async ({ session }, profLink) => {
-      if (config.data_collet) {
+      if (config.data_collect) {
         Umami.send({
           ctx,
           url: '/getid',
