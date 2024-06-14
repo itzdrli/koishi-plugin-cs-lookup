@@ -1,6 +1,6 @@
 import { Context } from 'koishi';
-import { Config } from '../index';
-import Umami from '../umami';
+import { Config } from './index';
+import Umami from './umami';
 
 export function apply(ctx: Context, config: Config) {
   ctx.command('getid <profLink:string>', '获取Steam ID', { authority: 0 })

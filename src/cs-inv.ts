@@ -1,9 +1,9 @@
 import { Context } from 'koishi'
-import { Config } from '../index'
+import { Config } from './index'
 import fs from 'node:fs'
 import path from 'node:path'
 import { } from 'koishi-plugin-puppeteer'
-import Umami from '../umami'
+import Umami from './umami'
 
 export function isOnlyDigits(str: string): boolean {
   return /^\d+$/.test(str);
@@ -72,7 +72,7 @@ export function generateHtml(chotaStyles, cardHTML, totalStr, steamId, steamName
 }
 
 export function inv(ctx: Context, config: Config) {
-  const chotaStyles = fs.readFileSync((path.parse(__filename).dir,'../chota.min.css'), 'utf-8');
+  const chotaStyles = fs.readFileSync(path.join(path.parse(__filename).dir,'./chota.min.css'), 'utf-8');
   ctx.command('cs-inv <steamId>', '查看CS背包', { authority: 0 })
     .action(async ({ session }, steamId) => {
       if (config.data_collect) {

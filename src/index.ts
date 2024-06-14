@@ -1,6 +1,6 @@
 import { Context, Schema } from 'koishi';
-import { inv } from './commands/cs-inv';
-import { apply as getId } from './commands/getid';
+import { inv } from './cs-inv';
+import { apply as getId } from './getid';
 
 export const name = 'cs-lookup';
 
