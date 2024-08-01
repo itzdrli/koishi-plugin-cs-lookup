@@ -32,9 +32,9 @@ export const usage = `
     display: inline-block;
     border-radius: 20px;
     padding: 5px;
-    background: yellow;
+    background: purple;
     color: #000000;
-" href="https://www.chongya.com/@itzdrli">冲呀</a>`;
+" href="https://afdian.com/a/itzdrli">爱发电</a>`;
 
 export function apply(ctx: Context, config: Config) {
   inv(ctx, config);

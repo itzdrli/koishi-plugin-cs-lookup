@@ -116,7 +116,7 @@ export function inv(ctx: Context, config: Config) {
             <div class="col-4">
               <div class="card">
                 <h2>${itemName}</h2>
-                <img src="${itemInfo.imageUrl}" alt="${itemName}" style="width:13%;"> <!-- 添加图片 -->
+                <img src="${itemInfo.imageUrl}" alt="${itemName}" style="width:13%;">
               </div>
             </div>
           `;
