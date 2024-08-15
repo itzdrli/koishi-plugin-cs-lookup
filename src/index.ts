@@ -1,10 +1,11 @@
 import { Context, Schema } from 'koishi';
 import { inv } from './cs-inv';
 import { apply as getId } from './getid';
+import { bind } from './csbind';
 
 export const name = 'cs-lookup';
 
-export const inject = ['puppeteer']
+export const inject = ['puppeteer', 'database']
 
 export interface Config {
   data_collect: boolean,
@@ -21,22 +22,36 @@ export const Config: Schema<Config> = Schema.object({
 })
 
 export const usage = `
-<h2>如遇使用问题可以前往QQ群: 957500313 讨论<h2>
-<h2> 本插件需要来自 <a href="www.steamwebapi.com">steamwebapi.com</a> 的 SteamWebAPI Key 进行非官方接口的背包查询和SteamID查询</h2>
-<h2> 匿名数据收集 👉 <a href="https://legal.itzdrli.com">隐私政策</a> </h2>
-<h3> 即为: </br>使用官方api查询背包: 不需要key(仅查询背包(中文)且容易被墙)</br>不使用官方api查询背包: 需要key(可以查背包(英文)和SteamID)</h3>
-<p>请我喝杯咖啡 👇</br><a href="https://ko-fi.com/itzdrli"><img src="https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white" alt="ko-fi"></a></p> 
-<a style="
-    font-size: 30px;
-    border: 2px solid red;
-    display: inline-block;
-    border-radius: 20px;
-    padding: 5px;
-    background: purple;
-    color: #000000;
-" href="https://afdian.com/a/itzdrli">爱发电</a>`;
+## 如遇使用问题可以前往QQ群: 957500313 讨论
+## 本插件需要来自 [steamwebapi.com](https://www.steamwebapi.com) 的 SteamWebAPI Key 进行非官方接口的背包查询和SteamID查询  
+## 匿名数据收集 👉 [隐私协议](https://legal.itzdrli.com)  
+
+### 使用官方api查询背包: 不需要key(仅查询背包(中文)且容易被墙)</br>不使用官方api查询背包: 需要key(可以查背包(英文)和SteamID)</h3>
+请我喝杯咖啡 👇   
+[![ko-fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/itzdrli)
+### [爱发电](https://afdian.com/a/itzdrli)`;
+
+declare module 'koishi' {
+  interface Tables {
+    cs_lookup: CsLookup
+  }
+}
+
+export interface CsLookup {
+  id: string
+  steamId: string
+  userid: string
+  platform: string
+}
 
 export function apply(ctx: Context, config: Config) {
+  ctx.model.extend('cs_lookup', {
+    id: 'string',
+    steamId: 'string',
+    userid: 'string',
+    platform: 'string'
+  }, {})
   inv(ctx, config);
   getId(ctx, config);
+  bind(ctx);
 }

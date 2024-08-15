@@ -72,8 +72,8 @@ export function generateHtml(chotaStyles, cardHTML, totalStr, steamId, steamName
 }
 
 export function inv(ctx: Context, config: Config) {
-  const chotaStyles = fs.readFileSync(path.join(path.parse(__filename).dir,'./chota.min.css'), 'utf-8');
-  ctx.command('cs-inv <steamId>', '查看CS背包', { authority: 0 })
+  const chotaStyles = fs.readFileSync(path.join(path.parse(__filename).dir, './chota.min.css'), 'utf-8');
+  ctx.command('cs-inv [steamId]', '查看CS背包', { authority: 0 })
     .action(async ({ session }, steamId) => {
       if (config.data_collect) {
         Umami.send({
@@ -85,10 +85,20 @@ export function inv(ctx: Context, config: Config) {
           }
         });
       }
-      if (!isOnlyDigits(steamId)) {
-        return "无效steamID, 若不知道steamID请使用指令 `getid Steam个人资料页链接` 获取";
+      if (!steamId) {
+        const res = await ctx.database.get('cs_lookup', { userid: session.userId, platform: session.platform })
+        if (res.length) {
+          steamId = res[0].steamId
+        } else {
+          return "请提供 steamID 或者使用 `getid` 命令获取或者使用 `csBind <steamID>` 进行绑定"
+        }
       }
       if (!config.useSteamAPI) {
+        if (steamId.startsWith("https://steamcommunity.com/")) {
+          const profUrl = `https://www.steamwebapi.com/steam/api/profile?key=${config.SteamWebAPIKey}&id=${steamId}`;
+          const data = await ctx.http.get(profUrl);
+          steamId = data.steamid;
+        }
         const invUrl = `https://www.steamwebapi.com/steam/api/inventory?key=${config.SteamWebAPIKey}&steam_id=${steamId}&game=csgo`;
         const profUrl = `https://www.steamwebapi.com/steam/api/profile?key=${config.SteamWebAPIKey}&steam_id=${steamId}`;
         try {
@@ -100,14 +110,12 @@ export function inv(ctx: Context, config: Config) {
           for (const item of invData) {
             totalItemCount++;
             const itemName = item.marketname;
-            const imageUrl = item.image; // 获取图片URL
-            // 检查 itemMap 是否已经有这个 itemName，如果没有，则初始化
+            const imageUrl = item.image;
             if (!itemMap.has(itemName)) {
               itemMap.set(itemName, { count: 0, imageUrl: imageUrl });
             }
             let itemInfo = itemMap.get(itemName);
-            itemInfo.count += 1; // 增加物品计数
-            // itemMap.set(itemName, itemInfo); // 这一步实际上是多余的，因为对象是引用类型
+            itemInfo.count += 1;
           }
 
           let cardHtml = ``;
@@ -131,6 +139,9 @@ export function inv(ctx: Context, config: Config) {
           return "出现错误, 请检查该用户库存是否公开或者网络连接是否正常"
         }
       } else {
+        if (!isOnlyDigits(steamId)) {
+          return "无效steamID, 若不知道steamID请使用指令 `getid Steam个人资料页链接` 获取";
+        }
         const invUrl = `https://steamcommunity.com/inventory/${steamId}/730/2?l=schinese`
         try {
           const invData = await ctx.http.get(invUrl);
