@@ -2,10 +2,13 @@ import { Context, Schema } from 'koishi';
 import { inv } from './cs-inv';
 import { apply as getId } from './getid';
 import { bind } from './csbind';
+import { } from 'koishi-plugin-umami-statistics-service';
 
 export const name = 'cs-lookup';
 
-export const inject = ['puppeteer', 'database']
+export const umami: [string, string] = ["29272bd1-0f4c-4db8-ad22-bec20ee15810", "https://data.itzdrli.cc"];
+
+export const inject = ['puppeteer', 'database', 'umamiStatisticsService'];
 
 export interface Config {
   data_collect: boolean,
@@ -24,7 +27,7 @@ export const Config: Schema<Config> = Schema.object({
 export const usage = `
 ## 如遇使用问题可以前往QQ群: 957500313 讨论
 ## 本插件需要来自 [steamwebapi.com](https://www.steamwebapi.com) 的 SteamWebAPI Key 进行非官方接口的背包查询和SteamID查询  
-## 匿名数据收集 👉 [隐私协议](https://legal.itzdrli.com)  
+## 匿名数据收集 👉 [隐私协议](https://legal.itzdrli.cc)  
 
 ### 使用官方api查询背包: 不需要key(仅查询背包(中文)且容易被墙)</br>不使用官方api查询背包: 需要key(可以查背包(英文)和SteamID)</h3>
 请我喝杯咖啡 👇   

@@ -1,7 +1,7 @@
 import { Context } from 'koishi'
-import { Config } from './index'
+import { Config, umami } from './index'
 import { } from 'koishi-plugin-puppeteer'
-import Umami from './umami'
+import { } from 'koishi-plugin-umami-statistics-service'
 
 export const light = ['#81a1c1', '#ffffff', '#5e81ac']
 export const dark = ['#2e3440', '#ffffff', '#434c5e']
@@ -11,17 +11,19 @@ export function isOnlyDigits(str: string): boolean {
 }
 
 export function inv(ctx: Context, config: Config) {
+  const umamiD = umami;
   ctx.command('cs-inv [steamId]', '查看CS背包', { authority: 0 })
     .action(async ({ session }, steamId) => {
       if (config.data_collect) {
-        Umami.send({
-          ctx,
+        ctx.umamiStatisticsService.send({
+          dataHostUrl: umamiD[1],
+          website: umamiD[0],
           url: '/cs-inv',
           urlSearchParams: {
             args: session.argv.args?.join(', '),
             ...(session.argv.options || {}),
-          }
-        });
+          },
+        })
       }
       if (!steamId) {
         const res = await ctx.database.get('cs_lookup', { userid: session.userId, platform: session.platform })
